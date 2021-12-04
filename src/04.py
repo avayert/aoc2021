@@ -46,26 +46,15 @@ while True:
     boards.append(Board(rows))
 
 
-def find_first():
-    for num in nums:
-        for board in boards:
-            if board.prune(num).done:
-                return board, num
+won = collections.deque()
+for num in nums:
+    for board in boards.copy():
+        if board.prune(num).done:
+            boards.remove(board)
+            won.append((board, num))
 
-board, num = find_first()
+board, num = won.popleft()
 print('Part 1:', board.sum() * num)
 
-def find_last():
-    won = collections.deque(maxlen=1)
-
-    for num in nums:
-        for board in boards.copy():
-            if board.prune(num).done:
-                won.append(board)
-                boards.remove(board)
-
-        if not boards:
-            return won[0], num
-
-board, num = find_last()
+board, num = won.pop()
 print('Part 2:', board.sum() * num)
