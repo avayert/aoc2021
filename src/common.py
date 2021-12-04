@@ -18,5 +18,6 @@ name = path.with_suffix('.txt').name
 # then we can get the `input` folder from that path
 input_file = path.parent.parent / 'input' / name
 
-# and then we can read the lines.
-lines = input_file.read_text().splitlines()
+# and then we can read the text and lines.
+raw = input_file.read_text()
+lines = raw.splitlines()
