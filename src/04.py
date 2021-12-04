@@ -1,4 +1,4 @@
-from common import lines
+from common import raw
 
 import itertools
 import collections
@@ -31,20 +31,16 @@ class Board:
         return sum(n for row in self.rows for n in row if n is not None)
 
 
-l = iter(lines)
-
-nums = list(map(int, next(l).split(',')))
-next(l)  # consume empty line
+num_text, _, board_text = raw.partition('\n')
+nums = [int(num) for num in num_text.split(',')]
 
 boards = []
-while True:
-    board_lines = list(itertools.takewhile(lambda line: line != '', l))
-    if not board_lines:
-        break
-
-    rows = [list(map(int, line.split())) for line in board_lines]
+for board in board_text.split('\n\n'):
+    rows = [
+        [int(num) for num in row.split()]
+        for row in board.splitlines()
+    ]
     boards.append(Board(rows))
-
 
 won = collections.deque()
 for num in nums:
