@@ -24,8 +24,11 @@ def count_chars():
     c = collections.Counter()
     for (a, b), value in pairs.items():
         c[a] += value
-        c[b] += value
-    return max(c.values()) // 2 - min(c.values()) // 2 + 1
+    c[b] += value
+
+    # we need to add 1 because in our initial pre-processing we count the least
+    # common character one extra time (e.g. ABA -> AB, BA -> A: 2, B: 2)
+    return max(c.values()) - min(c.values()) + 1
 
 for i in range(10):
     pairs = step()
